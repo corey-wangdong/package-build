@@ -193,3 +193,52 @@ devServer: {
 }
 ```
 
+## 项目中引入 scss
+`pnpm add -D sass sass-loader`
+
+```
+module: {
+    rules: [
+      ...
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      ...
+    ]
+  },
+```
+创建 scss 文件 引入样式，发现可以支持 scss 了
+
+## 项目中引入 less
+`pnpm add -D less less-loader`
+
+```
+module: {
+    rules: [
+      ...
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
+      ...
+    ]
+  },
+```
+创建 less 文件 引入样式，发现可以支持 less 了
