@@ -7,7 +7,7 @@
 
 ## 安装 webpack 依赖包
 
-`pnpm install webpack webpack-cli -D`
+`pnpm add -D webpack webpack-cli`
 
 ## 在 scripts 里添加打包命令
 ```cmd
@@ -31,9 +31,44 @@ module.exports = {
 }
 ```
 
-### 修改scripts 里面的打包命令
+## 修改scripts 里面的打包命令
 ```cmd
 "scripts": {
     "build": "webpack --config ./config/webpack-config.js"
   },
 ```
+
+## 增加对 es6 的转换功能
+我们添加了 es6.js 文件 里面加了 类的的方法，目前 webpack 输出还是原生的 ES6 的代码，在 Chrome 中以支持类的原生运行，但在有些浏览器中只支持 ES5 的代码，因此我们需要把 ES6 的代码转为 ES5 的代码再运行。 
+
+Chrome 中也不支持 ES6 中 装饰器的写法，我们也需要去转成 ES5 的代码
+
+那这个时候我们就需要用到 babel 来做这些工作
+
+`pnpm add -D @babel/core @babel/preset-env babel-loader`
+
+## 配置 webpack
+```
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env']
+            ]
+          }
+        }
+      }
+    ]
+  }
+```
+
+可以看到 此时打包之后的 代码是 ES5 
+
+## 添加 ES6 的装饰器
+打包时发现报错了，因为对于 @ 这样的符号 babel 预设并不能直接识别，需要安装 插件：@babel/plugin-proposal-decorators
+
+`pnpm add -D @babel/plugin-proposal-decorators`
