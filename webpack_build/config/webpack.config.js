@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -40,6 +41,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../public/index.html')
+    }),
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
@@ -54,5 +58,9 @@ module.exports = {
         }
       }
     }
+  },
+  devServer: {
+    port: 8000,
+    hot: true
   }
 }

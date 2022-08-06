@@ -155,4 +155,41 @@ module: {
 打包之后可以看到样式已经抽离成单独的文件
 
 
+## 截止目前都是手动引入打包后的 js 和 css, 很麻烦，接下来实现打包后的文件自动引入
+
+`pnpm add -D html-webpack-plugin`
+
+```
+  plugins: [
+    ...
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../public/index.html')
+    })
+  ],
+```
+
+打包后可以看到 在dist 文件目录下 生成了 index.html 文件 并自动引入了打包好的 js 和 css 文件
+
+## 目前每次修改东西之后都是手动打包的，现在开启 webpack 的热更新，每次修改后让 webpack 自动给我们打包
+
+`pnpm add -D webpack-cli webpack-dev-server`
+
+## 修改 scripts
+```
+"scripts": {
+    "start": "webpack server --config ./config/webpack.config.js",
+    "build": "webpack --config ./config/webpack.config.js",
+  }
+```
+
+pnpm start 之后我们发现开启了 webpack 开启了 server, 访问 http://localhost:8080/ 可以看到我们的项目
+修改之后页面也会自动去刷新
+
+## webpack 中添加 devServer, 修改配置
+```
+devServer: {
+  port: 8000,
+  hot: true
+}
+```
 
