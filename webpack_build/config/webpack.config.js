@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, '../index.js')
+    // index: path.resolve(__dirname, '../index.js')
+    index: path.resolve(__dirname, '../src/react.jsx')
   },
   mode: 'development',
   devtool: 'cheap-module-source-map',
@@ -14,12 +15,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx?)$/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env']
+              '@babel/preset-env',
+              '@babel/preset-react'
             ],
             plugins: [
               ["@babel/plugin-proposal-decorators", { "legacy": true }]
@@ -28,5 +30,16 @@ module.exports = {
         }
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          filename: 'vendor.js',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/]/
+        }
+      }
+    }
   }
 }

@@ -72,3 +72,43 @@ Chrome 中也不支持 ES6 中 装饰器的写法，我们也需要去转成 ES5
 打包时发现报错了，因为对于 @ 这样的符号 babel 预设并不能直接识别，需要安装 插件：@babel/plugin-proposal-decorators
 
 `pnpm add -D @babel/plugin-proposal-decorators`
+## 配置 webpack
+```
+module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env']
+            ],
+            plugins: [
+              ["@babel/plugin-proposal-decorators", { "legacy": true }]
+            ]
+          }
+        }
+      }
+    ]
+  }
+```
+
+## 搭建 react 脚手架
+`pnpm add react react-dom @babel/preset-react`
+
+这个时候我们发现 打包之后的文件多了很多东西，因为把 react 和 react-dom 也打包到一起了，这些包基本不动，我们应该抽离出去，也就是缓存包的提取
+
+```
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          filename: 'vendor.js',
+          chunks: 'all',
+          test: /[\\/]node_modules[\\/]/
+        }
+      }
+    }
+  }
+```
