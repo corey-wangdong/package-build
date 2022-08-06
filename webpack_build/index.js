@@ -1,7 +1,15 @@
-import Person from './src/es6';
+import React from "react";
+import { StrictMode } from "react";
+import { createRoot } from 'react-dom/client';
+// import React_js from './src/react.jsx';
+import React_ts from './src/react.tsx';
 
-const person1 = new Person();
+function HelloMessage({ name }) {
+  return <div className="container">
+    Hello {name}
+    <React_ts name={name} />
+  </div>;
+}
 
-console.log(person1.changeAge(27));
-console.log(person1.changeName('鹤博'));
-console.log('对着镜子里的那个人，说声抱歉');
+const root = createRoot(document.getElementById('root'));
+root.render(<StrictMode><HelloMessage name="corey" /></StrictMode>);

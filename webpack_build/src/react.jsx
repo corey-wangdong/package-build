@@ -1,13 +1,12 @@
-import React from "react";
-import { StrictMode } from "react";
-import { createRoot } from 'react-dom/client';
+import React from 'react';
 // import './react.css';
 // import './react.scss';
 import './react.less';
 
-function HelloMessage({ name }) {
-  return <div className="container">Hello {name}</div>;
+function React_js() {
+  return (
+    <div className='container'>React_js</div>
+  )
 }
 
-const root = createRoot(document.getElementById('root'));
-root.render(<StrictMode><HelloMessage name="corey" /></StrictMode>);
+export default React_js

@@ -242,3 +242,80 @@ module: {
   },
 ```
 创建 less 文件 引入样式，发现可以支持 less 了
+
+## 项目引入 ts
+`pnpm add -D typescript`
+
+因为用的是 react 包， 所以还需要引入 react支持ts 的一套
+`pnpm add -D @types/react @types/react-dom`
+
+```
+module: {
+    rules: [
+      {
+        test: /\.(js|jsx?|tsx?)$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ],
+            plugins: [
+              ["@babel/plugin-proposal-decorators", { "legacy": true }]
+            ]
+          }
+        }
+      }
+    ]
+  }
+```
+
+## 开启 ts 类型校验
+添加 tsconfig.json 文件
+
+可以看到 ts 报错已经可以提醒了， 但是我们的打包 还是正常的，并没有中断， 我们打包时发现ts 类型报错需要终止打包
+
+开启 webpack 打包时的类型检查 需要这个插件 fork-ts-checker-webpack-plugin
+`pnpm add -D fork-ts-checker-webpack-plugin`
+
+webpack 里的配置
+```
+plugins: [
+    ...
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(__dirname, '../tsconfig.json')
+      }
+    }),
+  ],
+```
+
+这是我们 ts 类型加上去了， 但是webpack 检测类型不对 会中断打包, 这时我们需要安装 @babel/plugin-transform-typescript 将特殊语法转为 js
+
+`pnpm add -D @babel/plugin-transform-typescript`
+
+```
+module: {
+    rules: [
+      {
+        test: /\.(js|jsx?|tsx?)$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/plugin-transform-typescript'
+            ],
+            plugins: [
+              ["@babel/plugin-proposal-decorators", { "legacy": true }]
+            ]
+          }
+        }
+      }
+    ]
+  }
+```
+
+这时编译打包可以看到一切正常

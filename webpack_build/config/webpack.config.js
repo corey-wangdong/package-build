@@ -1,13 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: {
-    // index: path.resolve(__dirname, '../index.js')
-    index: path.resolve(__dirname, '../src/react.jsx')
+    index: path.resolve(__dirname, '../index.js')
+    // index: path.resolve(__dirname, '../src/react.jsx')
   },
   mode: 'development',
   devtool: 'cheap-module-source-map',
@@ -18,18 +17,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx?)$/,
+        test: /\.(js|jsx?|tsx?)$/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
               '@babel/preset-env',
-              '@babel/preset-react'
+              '@babel/preset-react',
+              '@babel/preset-typescript'
             ],
             plugins: [
               ["@babel/plugin-proposal-decorators", { "legacy": true }]
             ]
-          }
+          },
+          // exclude: /node_modules/
         }
       },
       {
@@ -70,7 +71,12 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css'
-    })
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(__dirname, '../tsconfig.json')
+      }
+    }),
   ],
   optimization: {
     splitChunks: {
@@ -85,6 +91,6 @@ module.exports = {
   },
   devServer: {
     port: 8000,
-    hot: true
+    hot: true,
   }
 }
