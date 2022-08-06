@@ -1,4 +1,6 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
@@ -28,9 +30,20 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader'
+        }]
       }
     ]
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
+  ],
   optimization: {
     splitChunks: {
       cacheGroups: {

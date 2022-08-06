@@ -112,3 +112,47 @@ module: {
     }
   }
 ```
+
+## 在 react 中添加样式并打包样式
+安装处理样式用到的 loader
+`pnpm add -D style-loader css-loader`
+
+## 添加对样式处理的 loader
+```
+  module: {
+    rules: [
+      ...
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  },
+```
+打包之后可以看到样式已经生效，但是样式跟 js 打包到一起了，不好管理，我们需要抽离样式
+抽离样式需要用到 mini-css-extract-plugin 插件
+
+`pnpm add -D mini-css-extract-plugin`
+
+```
+ module: {
+    rules: [
+      ...
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader'
+        }]
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
+  ],
+```
+打包之后可以看到样式已经抽离成单独的文件
+
+
+
