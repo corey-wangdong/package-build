@@ -319,3 +319,22 @@ module: {
 ```
 
 这时编译打包可以看到一切正常
+
+## 将 babel 的配置从webpack 抽离出来 放到 .babelrc 文件里
+```
+  {
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ]
+  ]
+}
+```
