@@ -1,7 +1,10 @@
 import React from 'react';
 // import './react.css';
-import './react.scss';
+// import './react.scss';
 // import './react.less';
+
+// import s from './react.scss';
+import s from './react.less';
 
 interface IProps {
   name: string
@@ -9,7 +12,7 @@ interface IProps {
 
 function React_ts(props: IProps) {
   return (
-    <div className='container'>React_ts {props.name}</div>
+    <div className={s.container}>React_ts {props.name}</div>
   )
 }
 

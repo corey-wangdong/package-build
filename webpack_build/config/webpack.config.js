@@ -27,7 +27,12 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]-[hash:base64:5]'
+              }
+            }
           },
           {
             loader: 'sass-loader'
@@ -39,7 +44,12 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]-[hash:base64:5]'
+              }
+            }
           },
           {
             loader: 'less-loader'

@@ -322,7 +322,7 @@ module: {
 
 ## 将 babel 的配置从webpack 抽离出来 放到 .babelrc 文件里
 ```
-  {
+{
   "presets": [
     "@babel/preset-env",
     "@babel/preset-react",
@@ -337,4 +337,49 @@ module: {
     ]
   ]
 }
+```
+
+## 支持 css-module 的写法
+开启 css-loader 的 module 模式即可
+```
+module: {
+    rules: [
+      ...
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]-[hash:base64:5]'
+              }
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]-[hash:base64:5]'
+              }
+            }
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      }
+      ...
+    ]
+  },
 ```
