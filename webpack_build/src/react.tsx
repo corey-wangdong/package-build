@@ -11,8 +11,11 @@ interface IProps {
 }
 
 function React_ts(props: IProps) {
+  // dd
   return (
-    <div className={s.container}>React_ts {props.name}</div>
+    <div className={s.container}>React_ts {props.name}
+      <div className={s.box}></div>
+    </div>
   )
 }
 

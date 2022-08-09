@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TemplatedPathPlugin = require('./my-plugin.js')
 
 module.exports = {
   entry: {
@@ -61,10 +62,25 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, {
           loader: 'css-loader'
         }]
+      },
+      {
+        test: /\.mobile$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: './mobile-css-loader',
+            options: {
+              width: 750,
+            }
+          }]
       }
     ]
   },
   plugins: [
+    // new TemplatedPathPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html')
     }),
@@ -90,6 +106,7 @@ module.exports = {
   },
   devServer: {
     port: 8000,
+    // open: true,
     hot: true,
   }
 }
