@@ -1,5 +1,5 @@
-# package-build
-打包工具的使用（webPack、vite、parcel等）
+# 前端自动化构建工具有：
+Rollup, Parcel, Snowpack, Vite, Webpack ...
 
 
 # webpack 与 vite 对比
@@ -65,3 +65,37 @@
 
 ## vite 生产环境为何不用 ESBuild 打包，而是用 Rollup （vite 官网解说）
 虽然 esbuild 快得惊人，并且已经是一个在构建库方面比较出色的工具，但一些针对构建 应用 的重要功能仍然还在持续开发中 —— 特别是代码分割和 CSS 处理方面。就目前来说，Rollup 在应用打包方面更加成熟和灵活。尽管如此，当未来这些功能稳定后，我们也不排除使用 esbuild 作为生产构建器的可能。
+
+
+
+# 其它构建工具
+
+## Rollup
+Rollup是一款 ES Modules 打包器，从作用上来看，Rollup 与 Webpack 非常类似。不过相比于 Webpack，Rollup要小巧的多
+现在很多我们熟知的库都都使用它进行打包，比如：Vue、React和three.js等
+
+Rollup打包的代码非常简洁，完成不像webpack那样存在大量引导代码和模块函数
+
+优点：
+1. 代码效率更简洁、效率更高   2. 默认支持 Tree-shaking
+
+缺点：
+加载其他类型的资源文件或者支持导入 CommonJS 模块，又或是编译 ES 新特性，这些额外的需求 Rollup需要使用插件去完成
+
+综合：
+rollup并不适合开发应用使用，因为需要使用第三方模块，而目前第三方模块大多数使用CommonJs方式导出成员，并且rollup不支持HMR，使开发效率降低
+
+但是在用于打包JavaScript 库时，rollup比 webpack 更有优势，因为其打包出来的代码更小、更快，其存在的缺点可以忽略
+
+## Parcel
+1. Parcel ，是一款完全零配置的前端打包器，它提供了 “傻瓜式” 的使用体验，只需了解简单的命令，就能构建前端应用程序,也支持模块热替换，但用法更简单
+2. Parcel 跟 Webpack 一样都支持以任意类型文件作为打包入口，但建议使用HTML文件作为入口，该HTML文件像平时一样正常编写代码、引用资源
+
+3. Parcel有个十分好用的功能：
+- 支持自动安装依赖，像webpack开发阶段突然使用安装某个第三方依赖，必然会终止dev server然后安装再启动。而Parcel则免了这繁琐的工作流程
+- 同时，Parcel能够零配置加载其他类型的资源文件，无须像webpack那样配置对应的loader
+
+## Snowpack
+1. Snowpack，是一种闪电般快速的前端构建工具，专为现代Web设计，较复杂的打包工具（如Webpack或Parcel）的替代方案，利用JavaScript的本机模块系统，避免不必要的工作并保持流畅的开发体验
+
+2. 开发阶段，每次保存单个文件时，Webpack和Parcel都需要重新构建和重新打包应用程序的整个bundle。而Snowpack为你的应用程序每个文件构建一次，就可以永久缓存，文件更改时，Snowpack会重新构建该单个文件
